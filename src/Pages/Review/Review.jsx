@@ -64,29 +64,17 @@ export const Review = () => {
                     </Typography>
                     <Typography
                       variant="body1"
-                      margin={'0px'}
-                      lineHeight={'16px'}
-                      height={"50px"}
                       fontFamily={"Fira Code"}
                       color={"text.dark"}
                       fontWeight={"500"}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
                     >
-                      {info.AnimeName}
+                      {info.AnimeName.length <= 20 ? info.AnimeName :  info.AnimeName.substring(0,20) + "..."}
                     </Typography>
                     <Typography
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                      height={"50px"}
+                      height={"30px"}
                       variant="body2"
                       fontFamily={"Fira Code"}
+                      mt={'5px'}
                     >
                       {info.Review.length <= 50
                         ? info.Review
