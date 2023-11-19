@@ -120,7 +120,7 @@ export const ReviewPage = () => {
           }}
         >
           {modal && (
-            <Alert sx={{ width: "400px" }} severity="success">
+            <Alert sx={{ maxWidth : "400px" }} severity="success">
               Your review has been posted successfully — check it out!
             </Alert>
           )}

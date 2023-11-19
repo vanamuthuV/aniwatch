@@ -106,7 +106,7 @@ export const Home = () => {
                         variant="body"
                         fontSize={"14px"}
                         fontFamily={"Fira Code"}
-                        sx={{ letterSpacing: "-.5px" }}
+                        sx={{ letterSpacing: "-.5px", textAlign : 'justify'}}
                         color={"text"}
                       >
                         {anime.info.substring(0, 150) + "..."}
