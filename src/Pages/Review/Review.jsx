@@ -1,4 +1,5 @@
-import * as React from "react";
+import { React } from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -192,4 +193,96 @@ export const ReviewPage = () => {
         </form>
       </Stack>
     );
+}
+const url = "https://api.jikan.moe/v4/top/anime";
+
+/*
+const [loading, setLoading] = React.useState(true);
+const [status, setStatus] = React.useState(false);
+const [Data, setData] = React.useState();
+
+useEffect(() => {
+  fetch(url).then(response => {
+    response.status === 200 && setStatus(true)
+  }).then(intel => {
+    setData(intel.data)
+    setLoading(false)
+  })
+})*/
+
+const Loader = () => {
+  return (
+    <ThemeProvider theme={MyTheme}>
+      <Typography variant="h4">
+        Loading....
+      </Typography>
+    </ThemeProvider>
+  )
+}
+
+const Status = () => {
+  return (
+    <ThemeProvider theme={MyTheme}>
+      <Typography variant="h6">Status Code : 200</Typography>
+    </ThemeProvider>
+  )
+}
+
+const AnimeCards = () => {
+  {
+    return (
+      Data.map((info) => {
+      return (
+        <Card
+          sx={{
+            maxWidth: 345,
+            marginBottom: "20px",
+            borderRadius: "6px",
+          }}
+        >
+          <CardActionArea sx={{ backgroundColor: "secondary.main" }}>
+            <CardMedia
+              component="img"
+              height="240"
+              image={info.image.image_url}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                fontFamily={"Fira code"}
+              >
+                {info.title}
+              </Typography>
+              <Typography
+                variant="body"
+                fontSize={"14px"}
+                fontFamily={"Fira Code"}
+                sx={{ letterSpacing: "-.5px", textAlign: "justify" }}
+                color={"text"}
+              >
+                {info.synopsis.substring(0, 150) + "..."}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "info.main",
+            }}
+          >
+            <Link to={`/${info.rank}`}>
+              <Button size="small" color="text">
+                Read more
+              </Button>
+            </Link>
+          </CardActions>
+        </Card>
+      )
+    }
+    ))
+    }
 }
