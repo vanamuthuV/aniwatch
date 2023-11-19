@@ -58,20 +58,34 @@ export const Review = () => {
                       variant="h6"
                       component="div"
                       fontFamily={"Fira Code"}
-                      borderBottom={"1px solid gray"}
+                      borderBottom={"1px solid #333333"}
                     >
                       {info.Name}
                     </Typography>
                     <Typography
-                      variant="h8"
+                      variant="body1"
+                      height={"30px"}
                       fontFamily={"Fira Code"}
-                      color={'text.dark'}
-                      fontWeight={'500'}
-                      sx={{  }}
+                      color={"text.dark"}
+                      fontWeight={"500"}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
                     >
                       {info.AnimeName}
                     </Typography>
-                    <Typography height={'30px'} variant="body2" fontFamily={"Fira Code"}>
+                    <Typography
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                      height={"50px"}
+                      variant="body2"
+                      fontFamily={"Fira Code"}
+                    >
                       {info.Review.length <= 50
                         ? info.Review
                         : info.Review.substring(0, 50) + "..."}
@@ -107,7 +121,7 @@ export const ReviewPage = () => {
       Review: reviewRef.current.value,
     });
     setModal(true)
-    setTimeout(() => {setModal(prev => !prev)},3000)
+    setTimeout(() => {setModal(prev => !prev)},2000)
   }
 
     return (
@@ -120,8 +134,8 @@ export const ReviewPage = () => {
           }}
         >
           {modal && (
-            <Alert sx={{ maxWidth : "400px" }} severity="success">
-              Your review has been posted successfully — check it out!
+            <Alert sx={{ maxWidth : "300px" }} severity="success">
+              Your review has been posted successfully !!
             </Alert>
           )}
         </Container>
