@@ -77,9 +77,9 @@ export const Review = () => {
                       fontFamily={"Fira Code"}
                       mt={'5px'}
                     >
-                      {info.Review.length <= 50
+                      {info.Review.length <= 40
                         ? info.Review
-                        : info.Review.substring(0, 50) + "..."}
+                        : info.Review.substring(0, 40) + "..."}
                     </Typography>
                   </CardContent>
                 </Card>
