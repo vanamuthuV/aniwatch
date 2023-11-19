@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { MyTheme } from "../../CustomColor";
-import { Container, Stack, ThemeProvider, TextField} from "@mui/material";
+import { Container, Stack, ThemeProvider, TextField, Alert} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
@@ -16,7 +16,8 @@ export const Review = () => {
         <Container>
           <Stack direction={"row"} alignItems={"center"}>
             <Typography
-              fontSize={"20px"}
+              fontSize={'24px'}
+              fontWeight={'500'}
               fontFamily={"Fira Code"}
               mt={"15px"}
               mb={"15px"}
@@ -39,7 +40,7 @@ export const Review = () => {
           <Stack
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "row-reverse",
               flexWrap: "wrap",
               justifyContent: "center",
               alignItems: "center",
@@ -51,7 +52,7 @@ export const Review = () => {
             {Store.map((info) => {
               return (
                 <Card sx={{ width: "250px" }}>
-                  <CardContent sx={{ backgroundColor: "info.medium" }}>
+                  <CardContent sx={{ backgroundColor: "info.light" }}>
                     <Typography
                       mb={"5px"}
                       variant="h6"
@@ -64,11 +65,13 @@ export const Review = () => {
                     <Typography
                       variant="h8"
                       fontFamily={"Fira Code"}
-                      sx={{ opacity: "0.8" }}
+                      color={'text.dark'}
+                      fontWeight={'500'}
+                      sx={{  }}
                     >
                       {info.AnimeName}
                     </Typography>
-                    <Typography variant="body2" fontFamily={"Fira Code"}>
+                    <Typography height={'30px'} variant="body2" fontFamily={"Fira Code"}>
                       {info.Review.length <= 50
                         ? info.Review
                         : info.Review.substring(0, 50) + "..."}
@@ -84,18 +87,18 @@ export const Review = () => {
 }
 
 const Store = [
+  {Name : 'John', AnimeName : 'Chainsaw man', Review : 'Nice work!!, but there is some problem'},
   { Name: 'Vanamuthu V', AnimeName: 'The Devil Is A Parttimer', Review: 'A Awesome thinking and no lag in story line. Enjoyed a lot!!' },
-  {Name : 'John', AnimeName : 'Chainsaw man', Review : 'Nice work!!, but there is some problem'}
 ]
 
 export const ReviewPage = () => {
-
-    const [link, setLink] = React.useState(null)
 
     const nameRef = React.useRef(null);
     const animenameRef = React.useRef(null);
     const reviewRef = React.useRef(null);
 
+    const [modal, setModal] = React.useState(false)
+  
   const SubmitHandler = (event) => {
     event.preventDefault()
     Store.push({
@@ -103,11 +106,25 @@ export const ReviewPage = () => {
       AnimeName: animenameRef.current.value,
       Review: reviewRef.current.value,
     });
-    console.log(Store)
+    setModal(true)
+    setTimeout(() => {setModal(prev => !prev)},3000)
   }
 
     return (
       <Stack mt={"15px"} mb={"15px"}>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {modal && (
+            <Alert sx={{ width: "400px" }} severity="success">
+              Your review has been posted successfully — check it out!
+            </Alert>
+          )}
+        </Container>
         <form
           onSubmit={(event) => {
             SubmitHandler(event);
@@ -157,15 +174,15 @@ export const ReviewPage = () => {
                 fontFamily: "Fira Code",
               }}
             ></textarea>
-              <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                endIcon={<SendIcon />}
-              >
-                {" "}
-                Post{" "}
-              </Button>
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained"
+              endIcon={<SendIcon />}
+            >
+              {" "}
+              Post{" "}
+            </Button>
           </Container>
         </form>
       </Stack>

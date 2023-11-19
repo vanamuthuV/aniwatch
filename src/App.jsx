@@ -23,9 +23,14 @@ import EmailIcon from "@mui/icons-material/Email";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { ReviewPage } from "./Pages/Review/Review";
+import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from "@mui/icons-material/Search";
+import { useContext, createContext } from "react";
+import { Details } from "./Pages/Details/Details";
 
 const pages = ['Search', 'About', 'Watch-Now', 'Contact'];
 
+const SearchRemover = createContext()
 
 export const App = () => {
   return (
@@ -34,6 +39,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/addreview" element={<ReviewPage />} />
+        <Route path="/:id" element={<Details />} />
       </Routes>
       <Footer />
     </BrowserRouter>
@@ -47,10 +53,11 @@ const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const SearchSetter = (event) => {
+  const SearchSetter = (event, ByCross) => {
     const { name } = event.target
+    console.log("I got Called" + ByCross)
     const { myValue } = event.currentTarget.dataset;
-    ((myValue || name) === 'Search') && setShowsearch(prev => !prev)
+    ((myValue || name || ByCross) === 'Search') && setShowsearch(prev => !prev)
   }
 
   const handleOpenNavMenu = (event) => {
@@ -69,159 +76,161 @@ const Header = () => {
   };
 
   return (
-    <ThemeProvider theme={MyTheme}>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <AdbIcon
-              sx={{
-                display: { xs: "none", md: "flex" },
-                mr: 1,
-              }}
-            />
-
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
+    <SearchRemover.Provider value={{ SearchSetter }}>
+      <ThemeProvider theme={MyTheme}>
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <AdbIcon
                 sx={{
-                  mr: 5,
                   display: { xs: "none", md: "flex" },
-                  fontFamily: "Fira Code",
-                  fontWeight: 700,
-                  fontSize: "20px",
-                  letterSpacing: ".2rem",
-                  textDecoration: "none",
-                  color: "#333333",
+                  mr: 1,
                 }}
-              >
-                ANI WATCH
-              </Typography>
-            </Link>
+              />
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 5,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "Fira Code",
+                    fontWeight: 700,
+                    fontSize: "20px",
+                    letterSpacing: ".2rem",
+                    textDecoration: "none",
+                    color: "#333333",
+                  }}
+                >
+                  ANI WATCH
+                </Typography>
+              </Link>
+
+              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography
+                        color={"text"}
+                        textAlign="center"
+                        data-my-value={page}
+                        onClick={(event) => SearchSetter(event)}
+                        sx={{ fontFamily: "Fira Code", fontWeight: "700" }}
+                      >
+                        {page}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="h5"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "flex", md: "none" },
+                    flexGrow: 1,
+                    fontFamily: "Fira Code",
+                    fontWeight: 700,
+                    letterSpacing: "1px",
+                    textDecoration: "none",
+                    color: "#403b02",
+                  }}
+                >
+                  ANI WATCH
+                </Typography>
+              </Link>
+
+              <Box
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                  justifyContent: "end",
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography
-                      color={"text"}
-                      textAlign="center"
-                      data-my-value = {page}
-                      onClick = {(event) => SearchSetter(event)}
-                      sx={{ fontFamily: "Fira Code", fontWeight: "700" }}
-                    >
-                      {page}
-                    </Typography>
-                  </MenuItem>
+                  <Button
+                    key={page}
+                    color="text"
+                    name={page}
+                    onClick={(event) => SearchSetter(event)}
+                    sx={{
+                      my: 2,
+                      fontFamily: "Fira Code",
+                      fontWeight: "300",
+                      fontSize: "16px",
+                      margin: "0px",
+                      display: "block",
+                    }}
+                  >
+                    {page}
+                  </Button>
                 ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+              </Box>
 
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                sx={{
-                  mr: 2,
-                  display: { xs: "flex", md: "none" },
-                  flexGrow: 1,
-                  fontFamily: "Fira Code",
-                  fontWeight: 700,
-                  letterSpacing: "1px",
-                  textDecoration: "none",
-                  color: "#403b02",
-                }}
-              >
-                ANI WATCH
-              </Typography>
-            </Link>
-
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-                justifyContent: "end",
-              }}
-            >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  color="text"
-                  name={page}
-                  onClick={(event) => SearchSetter(event)}
-                  sx={{
-                    my: 2,
-                    fontFamily: "Fira Code",
-                    fontWeight: "300",
-                    fontSize: "16px",
-                    margin: "0px",
-                    display: "block",
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton
+                    color="primary"
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0 }}
+                  ></IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
                   }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton
-                  color="primary"
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0 }}
-                ></IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              ></Menu>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      {showsearch && <Search />}
-    </ThemeProvider>
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                ></Menu>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+        {showsearch && <Search />}
+      </ThemeProvider>
+    </SearchRemover.Provider>
   );
 }
 
@@ -263,14 +272,49 @@ const Footer = () => {
 }
 
 const Search = () => {
+
+  const {SearchSetter} = useContext(SearchRemover)
+
   return (
     <ThemeProvider theme={MyTheme}>
-      <Container sx={{display : 'flex', flex : '1', marginTop : '15px', marginBottom : '15px'}}>
-        <input
-          placeholder="Search"
-          style={{ display: "flex", flex: 1, padding : '10px', borderRadius : '10px', border : '1px solid #333333'}}
-        ></input>
-      </Container>
+      <Stack
+        mr={"20px"}
+        ml={"20px"}
+        bgcolor={'primary'}
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          flex: "1",
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: "15px",
+          marginBottom: "15px",
+          position: "relative",
+        }}
+      >
+        <Stack direction={"row"} display={"flex"} flex={"1"}>
+          <input
+            placeholder="Search"
+            style={{
+              maxWidth: "900px",
+              display: "flex",
+              flex: 1,
+              padding: "10px",
+              borderRadius: "10px",
+              border: "1px solid #333333",
+            }}
+          ></input>
+          <IconButton sx={{ border: "1px solid #333333", marginLeft: "10px" }}>
+            <SearchIcon />
+          </IconButton>
+        </Stack>
+        <IconButton
+          onClick={(event) => SearchSetter(event, "Search")}
+          sx={{ marginLeft: "20px" }}
+        >
+          <CloseIcon color="#eb1515" />
+        </IconButton>
+      </Stack>
     </ThemeProvider>
   );
 }

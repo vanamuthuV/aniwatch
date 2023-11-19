@@ -12,14 +12,19 @@ export const MyTheme = createTheme({
     },
     text: {
       main: "#000000",
-      medium: "#4c4817",
+      light: "#4c4817",
       dark: "#403b02",
     },
     info: {
       main: "#ede7a4",
-      medium : "#E6E6FA",
+      light : "#E6E6FA",
       dark : '#333333',
     },
+    success: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark : '#1b5e20'
+    }
   },
 });
 

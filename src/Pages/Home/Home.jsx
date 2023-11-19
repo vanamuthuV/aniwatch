@@ -58,7 +58,6 @@ export const Home = () => {
           <Typography
             variant="h4"
             fontFamily={"Fira Code"}
-            fontSize={"20px"}
             fontWeight={"500"}
             mr={"20px"}
             ml={"20px"}
@@ -115,16 +114,17 @@ export const Home = () => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions
-                    
                     sx={{
                       alignItems: "center",
                       justifyContent: "center",
                       backgroundColor: "info.main",
                     }}
                   >
-                    <Button size="small" color="text">
-                      Read more
-                    </Button>
+                    <Link to={`/${anime.id}`}>
+                      <Button size="small" color="text" >
+                        Read more
+                      </Button>
+                    </Link>
                   </CardActions>
                 </Card>
               );
