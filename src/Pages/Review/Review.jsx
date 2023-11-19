@@ -64,7 +64,9 @@ export const Review = () => {
                     </Typography>
                     <Typography
                       variant="body1"
-                      height={"30px"}
+                      margin={'0px'}
+                      lineHeight={'16px'}
+                      height={"50px"}
                       fontFamily={"Fira Code"}
                       color={"text.dark"}
                       fontWeight={"500"}
