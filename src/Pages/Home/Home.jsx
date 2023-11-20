@@ -55,7 +55,7 @@ export const Home = () => {
       fetch(url)
         .then(response => response.json()).then(da => {
           console.log(da.data)
-          setData(da.data)
+          setData(da.data.slice(0,12))
           setLoading(prev => !prev)
         })
     }, []);

@@ -4,13 +4,14 @@ body {
 
 .hero {
   height: 500px;
+  width : 100%;
   position : relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
   padding-left : 50px;
-    background-color: black;
+  background-color: rgb(0, 0, 0);
   background: url('../../../public/Cover.jpg') no-repeat center center/cover ;
 }
 
@@ -24,7 +25,7 @@ body {
     z-index: 1;
     background-color: rgba(44, 38, 38, 0.6);
     box-shadow: inset 400px 100px 250px #000000;
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .hero-title {
