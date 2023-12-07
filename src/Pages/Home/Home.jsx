@@ -22,6 +22,8 @@ import { Review } from "../Review/Review";
 
 const url = "https://api.jikan.moe/v4/top/anime";
 
+export let TransferData;
+
 const DemoPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   ...theme.typography.body2,
@@ -45,6 +47,18 @@ const Hero = () => {
   );
 };
 
+const SearchGenres = () => {
+  return (
+    <ThemeProvider theme={MyTheme}>
+      <div>
+        <Link to={'/genres'}>
+          <p>Search By Genres</p>
+        </Link>
+      </div>
+    </ThemeProvider>
+  )
+}
+
 export const Home = () => {
 
     const [loading, setLoading] = useState(true);
@@ -55,6 +69,7 @@ export const Home = () => {
       fetch(url)
         .then(response => response.json()).then(da => {
           console.log(da.data)
+          TransferData = da.data
           setData(da.data.slice(0,12))
           setLoading(prev => !prev)
         })
@@ -176,7 +191,9 @@ export const Home = () => {
             {loading && <Loader />}
             {status && <Status />}
             {!loading && <AnimeCards />}
-            
+            {!loading && <SearchGenres />}
+
+
           </Stack>
           <Review />
           <Container sx={{ marginTop: "10px", marginBottom: "30px" }}>

@@ -27,6 +27,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from "@mui/icons-material/Search";
 import { useContext, createContext } from "react";
 import { Details } from "./Pages/Details/Details";
+import { Genres } from "./Pages/genres/genres";
 
 const pages = ['Search', 'About', 'Watch-Now', 'Contact'];
 
@@ -40,6 +41,8 @@ export const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/addreview" element={<ReviewPage />} />
         <Route path="/:id" element={<Details />} />
+        <Route path="/genres" element={<Genres />} />
+        <Route path="/genres/:id" element={<Details />} />
       </Routes>
       <Footer />
     </BrowserRouter>
