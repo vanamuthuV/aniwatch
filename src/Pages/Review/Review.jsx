@@ -41,7 +41,7 @@ export const Review = () => {
           <Stack
             sx={{
               display: "flex",
-              flexDirection: "row-reverse",
+              flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: "center",
               alignItems: "center",
@@ -93,9 +93,17 @@ export const Review = () => {
 }
 
 const Store = [
-  {Name : 'John', AnimeName : 'Chainsaw man', Review : 'Nice work!!, but there is some problem'},
-  { Name: 'Vanamuthu V', AnimeName: 'The Devil Is A Parttimer', Review: 'A Awesome thinking and no lag in story line. Enjoyed a lot!!' },
-]
+  {
+    Name: "Vanamuthu V",
+    AnimeName: "The Devil Is A Parttimer",
+    Review: "A Awesome thinking and no lag in story line. Enjoyed a lot!!",
+  },
+  {
+    Name: "John",
+    AnimeName: "Chainsaw man",
+    Review: "Nice work!!, but there is some problem",
+  },
+];
 
 export const ReviewPage = () => {
 
@@ -107,13 +115,13 @@ export const ReviewPage = () => {
   
   const SubmitHandler = (event) => {
     event.preventDefault()
-    Store.push({
+    Store.unshift({
       Name: nameRef.current.value,
       AnimeName: animenameRef.current.value,
       Review: reviewRef.current.value,
     });
     setModal(true)
-    setTimeout(() => {setModal(prev => !prev)},2000)
+    setTimeout(() => {setModal(prev => !prev)},3000)
   }
 
     return (
