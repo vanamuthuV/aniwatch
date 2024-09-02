@@ -28,6 +28,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useContext, createContext } from "react";
 import { Details } from "./Pages/Details/Details";
 import { Genres } from "./Pages/genres/genres";
+import { MangaList } from "./Pages/manga";
+import MangaDetails from "./Pages/mangadetails";
+import About from "./Pages/about";
 
 const pages = ['Search', 'About', 'Watch-Now', 'Contact'];
 
@@ -43,6 +46,9 @@ export const App = () => {
         <Route path="/:id" element={<Details />} />
         <Route path="/genres" element={<Genres />} />
         <Route path="/genres/:id" element={<Details />} />
+        <Route path="/manga" element={<MangaList />} />
+        <Route path="/manga/:id" element={<MangaDetails />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </BrowserRouter>
@@ -139,19 +145,43 @@ const Header = () => {
                     display: { xs: "block", md: "none" },
                   }}
                 >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Link to={"/manga"}>
+                    <MenuItem onClick={handleCloseNavMenu}>
                       <Typography
                         color={"text"}
                         textAlign="center"
-                        data-my-value={page}
                         onClick={(event) => SearchSetter(event)}
                         sx={{ fontFamily: "Fira Code", fontWeight: "700" }}
                       >
-                        {page}
+                        MANGA
                       </Typography>
                     </MenuItem>
-                  ))}
+                  </Link>
+
+                  <Link to={"/genres"}>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography
+                        color={"text"}
+                        textAlign="center"
+                        onClick={(event) => SearchSetter(event)}
+                        sx={{ fontFamily: "Fira Code", fontWeight: "700" }}
+                      >
+                        CATEGORY
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link to={'/about'}>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography
+                        color={"text"}
+                        textAlign="center"
+                        onClick={(event) => SearchSetter(event)}
+                        sx={{ fontFamily: "Fira Code", fontWeight: "700" }}
+                      >
+                        ABOUT
+                      </Typography>
+                    </MenuItem>
+                  </Link>
                 </Menu>
               </Box>
               <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -183,11 +213,9 @@ const Header = () => {
                   justifyContent: "end",
                 }}
               >
-                {pages.map((page) => (
+                <Link to={"/manga"}>
                   <Button
-                    key={page}
                     color="text"
-                    name={page}
                     onClick={(event) => SearchSetter(event)}
                     sx={{
                       my: 2,
@@ -198,9 +226,42 @@ const Header = () => {
                       display: "block",
                     }}
                   >
-                    {page}
+                    MANGA
                   </Button>
-                ))}
+                </Link>
+
+                <Link to={"/genres"}>
+                  <Button
+                    color="text"
+                    onClick={(event) => SearchSetter(event)}
+                    sx={{
+                      my: 2,
+                      fontFamily: "Fira Code",
+                      fontWeight: "300",
+                      fontSize: "16px",
+                      margin: "0px",
+                      display: "block",
+                    }}
+                  >
+                    CATEGORY
+                  </Button>
+                </Link>
+                <Link to={"/about"}>
+                  <Button
+                    color="text"
+                    onClick={(event) => SearchSetter(event)}
+                    sx={{
+                      my: 2,
+                      fontFamily: "Fira Code",
+                      fontWeight: "300",
+                      fontSize: "16px",
+                      margin: "0px",
+                      display: "block",
+                    }}
+                  >
+                    ABOUT
+                  </Button>
+                </Link>
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
@@ -239,38 +300,67 @@ const Header = () => {
 
 const Footer = () => {
   return (
-    <ThemeProvider theme={MyTheme}>
-      <AppBar
-        position="static"
-        color="primary"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          borderTop : '1px solid #333333'
-        }}
-      >
-        <Typography variant="p" mt={"10px"}>
-          &copy; Copyright @ ANI WATCH
-        </Typography>
-        <br></br>
-        <Stack direction={"row"} mt={"5px"}>
-          <IconButton href="https://instagram.com/_rajpiratz_?igshid=OGY3MTU3OGY1Mw==">
+    <footer class="bg-white text-gray-800 border-t border-gray-200 py-10 ">
+      <div class="container mx-auto text-center">
+        <p class="text-sm mb-4">&copy; {new Date().getFullYear()} ANI WATCH</p>
+
+        <div class="flex justify-center space-x-4 mb-4">
+          <a
+            href="https://instagram.com/_rajpiratz_"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-600 hover:text-gray-900 transition-colors duration-300"
+          >
             <InstagramIcon />
-          </IconButton>
-          <IconButton href={`mailto:1hk21cs179@hkbk.edu.in`}>
+          </a>
+          <a
+            href="mailto:1hk21cs179@hkbk.edu.in"
+            class="text-gray-600 hover:text-gray-900 transition-colors duration-300"
+          >
             <EmailIcon />
-          </IconButton>
-          <IconButton href="https://x.com/VanamuthuV?t=jPPvDLx5a_ZO2ZWn34vQZg&s=09">
+          </a>
+          <a
+            href="https://x.com/VanamuthuV?t=jPPvDLx5a_ZO2ZWn34vQZg&s=09"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-600 hover:text-gray-900 transition-colors duration-300"
+          >
             <TwitterIcon />
-          </IconButton>
-          <IconButton href="https://www.linkedin.com/in/vanamuthu-v-49ab6a284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+          </a>
+          <a
+            href="https://www.linkedin.com/in/vanamuthu-v-49ab6a284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-600 hover:text-gray-900 transition-colors duration-300"
+          >
             <LinkedInIcon />
-          </IconButton>
-        </Stack>
-      </AppBar>
-    </ThemeProvider>
+          </a>
+        </div>
+
+        <p class="text-sm mb-2">
+          Made By{" "}
+          <a
+            href="https://vanafolio.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500 hover:underline"
+          >
+            Vanamuthu V
+          </a>{" "}
+        </p>
+        <p class="text-sm">
+          <a
+            href="https://jikan.moe/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500 hover:underline"
+          >
+            Visit Jikan API
+          </a>
+          - Source for anime data
+        </p>
+      </div>
+    </footer>
   );
 }
 

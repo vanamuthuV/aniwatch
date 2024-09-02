@@ -1,6 +1,6 @@
 import React from "react";
 import { TransferData } from "../Home/Home";
-import { ThemeProvider , Typography} from "@mui/material";
+import { ThemeProvider, Typography } from "@mui/material";
 import { MyTheme } from "../../CustomColor";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,98 +9,97 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const GenresList = [];
-const GenresAnimeList = []
+const GenresAnimeList = {};
 
 export const Genres = () => {
-    console.log(TransferData)
+  TransferData.map((anime) => {
+    anime.genres.map((gen) => {
+      if (!GenresList.includes(gen.name)) {
+        GenresList.push(gen.name);
+      }
+    });
+  });
+  GenresList.sort();
+  console.log(GenresList);
+
+  GenresList.map((genres) => {
+    GenresAnimeList[genres] = [];
     TransferData.map((anime) => {
-        anime.genres.map((item) => {
-            !GenresList.includes(item.name) ? GenresList.unshift(item.name) : GenresList
-        })
-    })
-    console.log(GenresList)
-
-    TransferData.map((anime) => {
-        anime.genres.map((item) => {
-            GenresAnimeList.push({'key' : GenresList.indexOf(item.name), ...anime})
-        })
-    })
-
-    console.log(GenresAnimeList)
-
-    for (let m = 0; m < GenresAnimeList.length; m++) {
-        for (let n = 0; n < GenresAnimeList.length; n++) {
-            if (GenresAnimeList[m].key < GenresAnimeList[n].key) {
-                let temp = GenresAnimeList[m]
-                GenresAnimeList[m] = GenresAnimeList[n]
-                GenresAnimeList[n] = temp
-            }
+      anime.genres.map((gen) => {
+        if (gen.name === genres) {
+          if (!GenresAnimeList[genres].includes(anime)) {
+            GenresAnimeList[genres].push(anime);
+          }
         }
-    }
+      });
+    });
+  });
 
-    console.log(GenresAnimeList)
+  console.log(GenresAnimeList);
 
-    let Prev = 0;
-    const show = false
-
-    return (
-        <ThemeProvider theme={MyTheme}>
-            <Typography variant="h1" sx={{fontSize : '30px', fontFamily : 'Fira Code'}}>Trending Animes</Typography><br></br>
-            <Typography variant="h3" sx={{ fontSize: '25px', fontWeight: '500', fontFamily: 'Fira Code' }}>{GenresList[0]}</Typography>
-        {GenresAnimeList.map((animes) => {
-          return (
-            <div>
-              {animes.key !== Prev && (
-                <>
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontSize: "25px",
-                      fontWeight: "500",
-                      fontFamily: "Fira Code",
-                    }}
-                  >
-                    {GenresList[animes.key]}
-                  </Typography>
-                  <br></br>
-                </>
-              )}
-              <Card sx={{ maxWidth: 250 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={animes.images.jpg.image_url}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      component="div"
-                      sx={{ fontSize: "20px", fontFamily : 'Fira Code'}}
-                    >
-                      {animes.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{fontFamily : 'Fira Code'}}>
-                      {animes.synopsis.substring(0, 200)}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions sx={{display : "flex", flexDirection : "row", justifyContent : 'center', alignItems : 'center'}}>
-                  <Link to={`/genres/${animes.rank}`}>
-                    <Button size="small" sx={{ color: "#403b02", fontFamily : 'Fira Code'}}>
-                      More
-                    </Button>
-                  </Link>
-                </CardActions>
-              </Card>
-              <Typography variant="p" sx={{ display: "none" }}>
-                {(Prev = animes.key)}
-              </Typography>
+  return (
+    <ThemeProvider theme={MyTheme}>
+      <p
+        variant="h1"
+        sx={{ fontSize: "30px", fontFamily: "Fira Code" }}
+        className="text-3xl text-center mt-10 mb-10 font-bold"
+      >
+        Trending Animes
+      </p>
+      <br></br>
+      <Typography
+        variant="h3"
+        sx={{ fontSize: "25px", fontWeight: "500", fontFamily: "Fira Code" }}
+      ></Typography>
+     <div className="p-4">
+        {Object.entries(GenresAnimeList).map(([genre, animes]) => (
+          <div key={genre} className="mb-12">
+            {/* Genre title */}
+            <h3 className="text-3xl font-bold font-mono mb-6 text-gray-800 border-b-2 border-yellow-400 inline-block">
+              {genre}
+            </h3>
+            {/* Anime cards container */}
+            <div className="flex flex-wrap gap-8 justify-center">
+              {animes.map((anime) => (
+                <div
+                  key={anime.title}
+                  className="max-w-xs flex-none transform transition duration-500 hover:scale-105 hover:shadow-2xl shadow-lg rounded-xl overflow-hidden bg-white hover:bg-gray-50"
+                >
+                  {/* Image */}
+                  <div className="flex justify-center items-center overflow-hidden">
+                    <img
+                      src={anime.images.jpg.image_url}
+                      alt={anime.title}
+                      className="object-cotain transition-transform duration-700 hover:scale-110 w-56 h-56"
+                    />
+                  </div>
+                  {/* Content */}
+                  <div className="p-4 bg-gray-50">
+                    <h4 className="text-left text-lg font-mono font-semibold text-gray-900 truncate">
+                      {anime.title.length > 20
+                        ? `${anime.title.substring(0, 20)}...`
+                        : anime.title}{" "}
+                      {/* Truncated title */}
+                    </h4>
+                    <p className="text-left font-mono text-gray-600">
+                      {anime.synopsis.substring(0, 50)}...{" "}
+                      {/* Truncated synopsis */}
+                    </p>
+                  </div>
+                  {/* More Button */}
+                  <div className="flex justify-center bg-gray-100 p-2">
+                    <Link to={`/genres/${anime.rank}`}>
+                      <button className="text-white bg-yellow-600 font-mono px-4 py-1.5 rounded transition duration-300 hover:bg-yellow-500 transform hover:scale-105 shadow-md">
+                        More
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-          );
-        })}
-      </ThemeProvider>
-    );
-}
+          </div>
+        ))}
+        </div>
+    </ThemeProvider>
+  );
+};

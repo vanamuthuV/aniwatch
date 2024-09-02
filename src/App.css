@@ -3,3 +3,11 @@ body {
     font-family: 'Fira Code';
     margin: 0px;
 }
+@keyframes slide-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-slide-left {
+  animation: slide-left 20s linear infinite;
+}

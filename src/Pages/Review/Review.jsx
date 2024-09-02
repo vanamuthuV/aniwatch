@@ -11,99 +11,69 @@ import { Link } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import "./Review.css"
 
+const Store = [
+  {
+    Name: "Alice",
+    AnimeName: "Attack on Titan",
+    Review:
+      "A gripping story with intense action and deep characters. The plot twists keep you on the edge of your seat.",
+  },
+  {
+    Name: "Bob",
+    AnimeName: "Naruto",
+    Review:
+      "An epic journey of a young ninja. The character development and fight scenes are legendary.",
+  },
+  {
+    Name: "Charlie",
+    AnimeName: "One Piece",
+    Review:
+      "A fantastic adventure with a diverse cast and a world full of mysteries. The humor and camaraderie are top-notch.",
+  },
+  {
+    Name: "Diana",
+    AnimeName: "My Hero Academia",
+    Review:
+      "A fresh take on the superhero genre with unique powers and engaging storylines. The character arcs are well-developed.",
+  },
+
+];
+
+
 export const Review = () => {
     return (
-      <ThemeProvider theme={MyTheme}>
-        <Container>
-          <Stack direction={"row"} alignItems={"center"}>
-            <Typography
-              fontSize={'24px'}
-              fontWeight={'500'}
-              fontFamily={"Fira Code"}
-              mt={"15px"}
-              mb={"15px"}
-            >
-              Reviews
-            </Typography>
-            <Link to={"/addreview"}>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<AddIcon />}
-                size="small"
-                sx={{ height: "30px", marginLeft: "60px" }}
-              >
-                Add a review
-              </Button>
-            </Link>
-          </Stack>
-
-          <Stack
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "3rem",
-              marginTop: "30px",
-              marginBottom: "30px",
-            }}
+      <div className="flex flex-wrap gap-4 p-4 flex-center justify-around">
+        {Store.map((review, index) => (
+          <div
+            key={index}
+            className="w-full sm:w-80 md:w-72 lg:w-60 bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 hover:shadow-xl duration-300"
           >
-            {Store.map((info) => {
-              return (
-                <Card sx={{ width: "250px" }}>
-                  <CardContent sx={{ backgroundColor: "info.light" }}>
-                    <Typography
-                      mb={"5px"}
-                      variant="h6"
-                      component="div"
-                      fontFamily={"Fira Code"}
-                      borderBottom={"1px solid #333333"}
-                    >
-                      {info.Name}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      fontSize={'14px'}
-                      fontFamily={"Fira Code"}
-                      color={"text.dark"}
-                      fontWeight={"500"}
-                    >
-                      {info.AnimeName.length <= 20 ? info.AnimeName :  info.AnimeName.substring(0,20) + "..."}
-                    </Typography>
-                    <Typography
-                      height={"30px"}
-                      variant="body2"
-                      fontFamily={"Fira Code"}
-                      mt={'5px'}
-                    >
-                      {info.Review.length <= 40
-                        ? info.Review
-                        : info.Review.substring(0, 40) + "..."}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </Stack>
-        </Container>
-      </ThemeProvider>
+            <h2
+              className="text-xl font-semibold text-gray-800 mb-2 truncate"
+              style={{ fontFamily: "Fira Code" }}
+            >
+              {review.Name}
+            </h2>
+            <h3
+              className="text-lg font-bold text-gray-600 mb-2 truncate"
+              style={{ fontFamily: "Fira Code" }}
+            >
+              {review.AnimeName}
+            </h3>
+            <p
+              className="text-sm text-gray-700"
+              style={{ fontFamily: "Fira Code" }}
+            >
+              {review.Review.length > 200
+                ? review.Review.substring(0, 200) + "..."
+                : review.Review}
+            </p>
+          </div>
+        ))}
+      </div>
     );
 }
 
-const Store = [
-  {
-    Name: "Vanamuthu V",
-    AnimeName: "The Devil Is A Parttimer",
-    Review: "A Awesome thinking and no lag in story line. Enjoyed a lot!!",
-  },
-  {
-    Name: "John",
-    AnimeName: "Chainsaw man",
-    Review: "Nice work!!, but there is some problem",
-  },
-];
 
 export const ReviewPage = () => {
 
